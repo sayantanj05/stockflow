@@ -1,0 +1,47 @@
+--- EMAIL NOTIFICATION ---
+Date: 2026-03-12 16:08:37
+To: singhsouravofficial15@gmail.com
+Subject: Welcome to StockFlow - Please verify your email
+Message:
+Hello sourav,
+
+Your StockFlow staff account has been created.
+Please click the following link to verify your email address and continue with your profile setup:
+
+http://localhost:5173/verify-email?token=4181dac4d826979a42329c2c5a189308
+
+Thank you,
+The StockFlow Admin Team
+--------------------------
+
+--- EMAIL NOTIFICATION ---
+Date: 2026-03-16 19:24:41
+To: souravsinghbhai@gmail.com
+Subject: StockFlow - Profile Setup Complete
+Message:
+Hello sourav,
+
+Your staff profile setup is complete!
+Your unique Staff ID is: 
+
+You can now log in and access your dashboard.
+
+Best regards,
+The StockFlow Admin Team
+--------------------------
+
+--- EMAIL NOTIFICATION ---
+Date: 2026-03-16 19:24:41
+To: admin@example.com
+Subject: StockFlow Admin Alert - New Staff Profile Completed
+Message:
+Admin Alert,
+
+A new staff member has successfully completed their profile setup.
+Name: sourav
+Staff ID: 
+
+Please log in to the admin dashboard to review their details.
+
+--------------------------
+

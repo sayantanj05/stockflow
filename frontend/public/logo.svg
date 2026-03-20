@@ -1,0 +1,18 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Light Blue Wave -->
+  <path d="M50 280 C 150 150, 250 150, 300 250 C 350 350, 420 350, 480 250 C 450 380, 350 400, 300 320 C 250 240, 150 200, 50 280 Z" fill="url(#paint0_linear)"/>
+  
+  <!-- Dark Blue Wave -->
+  <path d="M100 280 C 200 200, 260 220, 320 280 C 380 340, 440 330, 480 250 C 450 320, 380 360, 320 300 C 260 240, 200 220, 100 280 Z" fill="url(#paint1_linear)"/>
+
+  <defs>
+    <linearGradient id="paint0_linear" x1="50" y1="265" x2="480" y2="265" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#21C8F6"/>
+      <stop offset="1" stop-color="#637BFF"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="100" y1="280" x2="480" y2="280" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1A3B8B"/>
+      <stop offset="1" stop-color="#2D82B7"/>
+    </linearGradient>
+  </defs>
+</svg>
