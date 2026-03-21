@@ -59,9 +59,9 @@ class DashboardController {
             $data['recent_activities'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             // Chart Data (Stock by Category)
-            $stmt = $this->conn->query("SELECT c.name as category, SUM(p.quantity) as total_stock 
-                                        FROM products p 
-                                        JOIN categories c ON p.category_id = c.id 
+            $stmt = $this->conn->query("SELECT c.name as category, COALESCE(SUM(p.quantity), 0) as total_stock 
+                                        FROM categories c 
+                                        LEFT JOIN products p ON c.id = p.category_id 
                                         GROUP BY c.id");
             $data['inventory_chart'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

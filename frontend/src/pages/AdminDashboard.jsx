@@ -42,7 +42,13 @@ function AdminDashboard() {
         Stock: parseInt(item.total_stock || 0)
     })) || [];
 
-    const COLORS = ['#4361ee', '#3a0ca3', '#f72585', '#4cc9f0', '#10b981', '#f59e0b'];
+    // Dynamic Color Generation (HSL) with Golden Ratio for perfect harmony
+    const getCategoryColor = (index, total) => {
+        const h = (index * 137.5) % 360; // 137.5 is the golden angle for maximum spread
+        const s = 65; // Professional saturation
+        const l = index % 2 === 0 ? 60 : 45; // Alternating lightness for visual rhythm
+        return `hsl(${h}, ${s}%, ${l}%)`;
+    };
 
     return (
         <div>
@@ -143,47 +149,68 @@ function AdminDashboard() {
                 <div className="col-xl-8 mb-4">
                     <div className="custom-table-container h-100">
                         <h5 className="fw-bold mb-4 text-dark">Stock by Category Overview</h5>
-                        <div style={{ width: '100%', height: 320 }}>
-                            <ResponsiveContainer>
-                                <BarChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 5 }}>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
-                                    <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
-                                    <RechartsTooltip 
-                                        cursor={{fill: 'rgba(67, 97, 238, 0.05)'}}
-                                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}
-                                    />
-                                    <Bar dataKey="Stock" fill="var(--primary-color)" radius={[6, 6, 0, 0]} barSize={45} />
+                        <div style={{ width: '100%', height: 320, overflowX: 'auto', overflowY: 'hidden' }} className="custom-scrollbar">
+                            <div style={{ minWidth: Math.max(0, chartData.length * 80), height: '100%' }}>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 5 }}>
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
+                                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b', fontSize: 12}} interval={0} />
+                                        <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
+                                        <RechartsTooltip 
+                                            cursor={{fill: 'rgba(67, 97, 238, 0.05)'}}
+                                            contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}
+                                        />
+                                        <Bar dataKey="Stock" radius={[6, 6, 0, 0]} barSize={45}>
+                                        {chartData.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={getCategoryColor(index, chartData.length)} />
+                                        ))}
+                                    </Bar>
                                 </BarChart>
                             </ResponsiveContainer>
+                        </div>
                         </div>
                     </div>
                 </div>
                 <div className="col-xl-4 mb-4">
-                    <div className="custom-table-container h-100">
+                    <div className="custom-table-container h-100 d-flex flex-column">
                         <h5 className="fw-bold mb-4 text-dark">Stock Distribution</h5>
-                        <div style={{ width: '100%', height: 320 }}>
+                        <div style={{ width: '100%', height: 220 }} className="flex-shrink-0">
                             <ResponsiveContainer>
                                 <PieChart>
                                     <Pie
                                         data={chartData}
                                         cx="50%"
-                                        cy="45%"
+                                        cy="50%"
                                         innerRadius={60}
-                                        outerRadius={90}
+                                        outerRadius={85}
                                         paddingAngle={5}
                                         dataKey="Stock"
                                     >
                                         {chartData.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                            <Cell key={`cell-${index}`} fill={getCategoryColor(index, chartData.length)} />
                                         ))}
                                     </Pie>
                                     <RechartsTooltip 
                                         contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}
                                     />
-                                    <Legend iconType="circle" />
                                 </PieChart>
                             </ResponsiveContainer>
+                        </div>
+                        {/* Custom 3-Column Legend with Scroll */}
+                        <div className="mt-3 flex-grow-1 custom-scrollbar" style={{ overflowY: 'auto', maxHeight: '150px' }}>
+                            <div className="row g-2 m-0 mt-2">
+                                {chartData.map((entry, index) => (
+                                    <div key={index} className="col-6 d-flex align-items-center mb-1 pe-1" title={entry.name}>
+                                        <span 
+                                            className="rounded-circle me-1 flex-shrink-0" 
+                                            style={{ width: '8px', height: '8px', backgroundColor: getCategoryColor(index, chartData.length) }}
+                                        ></span>
+                                        <span className="text-muted text-truncate" style={{ fontSize: '13px', fontWeight: '500' }}>
+                                            {entry.name}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>

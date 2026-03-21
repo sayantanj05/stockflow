@@ -40,6 +40,18 @@ class Stock {
             if($this->type == 'add') {
                 $query2 = "UPDATE " . $this->product_table . " SET quantity = quantity + :qty WHERE id = :pid";
             } else {
+                // Check if sufficient stock exists first
+                $check_query = "SELECT quantity FROM " . $this->product_table . " WHERE id = :pid FOR UPDATE";
+                $check_stmt = $this->conn->prepare($check_query);
+                $check_stmt->bindParam(":pid", $this->product_id);
+                $check_stmt->execute();
+                $row = $check_stmt->fetch(PDO::FETCH_ASSOC);
+                $current_qty = $row ? (int)$row['quantity'] : 0;
+
+                if ($current_qty < $this->quantity) {
+                    throw new Exception("Insufficient stock. Available: " . $current_qty);
+                }
+
                 $query2 = "UPDATE " . $this->product_table . " SET quantity = quantity - :qty WHERE id = :pid";
             }
             

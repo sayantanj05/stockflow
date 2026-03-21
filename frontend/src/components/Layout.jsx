@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 
 const Layout = () => {
   return (
-    <div className="d-flex w-100">
+    <div>
       <Sidebar />
       <div className="main-content flex-grow-1 bg-light">
         <Navbar />

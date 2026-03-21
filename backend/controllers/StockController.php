@@ -58,12 +58,17 @@ class StockController {
             $stock->type = $type;
             $stock->quantity = $data->quantity;
 
-            if($stock->addTransaction()) {
-                http_response_code(200);
-                echo json_encode(["message" => "Stock " . $type . "ed successfully."]);
-            } else {
-                http_response_code(503);
-                echo json_encode(["message" => "Unable to process stock transaction."]);
+            try {
+                if($stock->addTransaction()) {
+                    http_response_code(200);
+                    echo json_encode(["message" => "Stock " . $type . "ed successfully."]);
+                } else {
+                    http_response_code(503);
+                    echo json_encode(["message" => "Unable to process stock transaction."]);
+                }
+            } catch (Exception $e) {
+                http_response_code(400); // Bad Request for validation errors
+                echo json_encode(["message" => $e->getMessage()]);
             }
         } else {
             http_response_code(400);
