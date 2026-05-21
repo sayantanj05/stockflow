@@ -1,8 +1,7 @@
 import axios from 'axios';
 import authService from './auth';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://stockflow-backend.infinityfreeapp.com/backend';
-const api = axios.create({
+const API_URL = import.meta.env.VITE_API_URL || 'https://stockflow-backend.infinityfreeapp.com/backend';const api = axios.create({
     baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json'
